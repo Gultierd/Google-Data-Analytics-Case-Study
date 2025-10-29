@@ -1,0 +1,64 @@
+---
+title: "Case Study: How does a bike-share navigate speedy success?"
+author: "Błażej"
+date: "2025-10-24"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+source("Case_Study.R")
+```
+
+# Introduction
+
+  This is a case study of a fictional company, Cyclistic, for Google Data Analytics course on Coursera. The study will follow the steps of data analysis process, which are **Ask**, **Prepare**, **Process**, **Analyze**, **Share** and **Act**. All data included in this study is available on a separate PDF file, including the introduction to the entire scenario, as well as characters and teams that will be mentioned later on.
+
+## Ask phase
+
+  **Cyclistic** is a growing Chicago bike-share program, with a fleet of 5824 bicycles and 692 stations. Its marketing strategy previously focused on broad awareness and flexible pricing plans: singe-ride passes, full-day passes, and annual memberships. Customers purchasing services using first two pricing plans are referred to as *casual riders*, while the customers that purchase annual memberships are *Cyclistic members*.
+
+  To maximize future growth, the company believes converting casual riders into members is the optimal strategy, as annual members are significantly more profitable. Therefore, the core business task for this study is to understand: **How do annual members and casual riders use Cyclistic bikes differently?**
+
+## Prepare phase
+
+  This analysis is based on [Divvy 2019 Q1](https://docs.google.com/spreadsheets/d/1uCTsHlZLm4L7-ueaSLwDg0ut3BP_V4mKDo2IMpaXrk4/template/preview?resourcekey=0-dQAUjAu2UUCsLEQQt20PDA#gid=1797029090) and [2020 Q1](https://docs.google.com/spreadsheets/d/179QVLO_yu5BJEKFVZShsKag74ZaUYIF6FevLYzs3hRc/template/preview#gid=640449855) historical trip data, provided by Motivate International Inc.. For purpose of this case study we consider them to be accurate and relevant to Cyclistic's business questions. The data used is made available for use by following [license](https://www.divvybikes.com/data-license-agreement). These datasets contain data on all bike rides in first quarter of 2019 and 2020.
+  
+  We will focus on key variables related to trip usage - start and end times of each ride, user type and the length of the ride (this one will be calculated). The datasets will be formatted consistently, resulting in five core columns for further analysis - **start**, **end times**, **user type**, **duration**, and **day of the week** - some of which will be calculated later on
+  
+## Process phase
+  The processing stage, handled in a separate R script, involves cleaning and transforming the data. This includes **removing missing values and duplicates**, creating **trip duration** (in minutes) column and calculating the **day of the week**. Finally, outliers will be removed, specifically trips shorter than 1 minute and longer than 3 weeks, and the two datasets will be merged into one.
+  
+## Analyze phase
+  Analysis is covered, again, by a separate R script. To answer our business question we focus on following four metrics - Sum of rides by user group, sum of rides on each day of the week by user group, mean duration of rides by user group, and mean duration of rides on each day of the week by user group. Key findings confirm significant differences between our two groups - casual riders prefer longer rent times and use the service mostly on weekends, while Cyclistic members use the service shorter on average, mostly during business days and they use it much more often. Below are some of these tibbles that we will work on shortly.
+```{r Analysis}
+MeanDuration
+RideCount
+```
+  
+## Share phase
+  To show the key differences we can take a look at graphs about both user groups:
+```{r Rides Chart, echo = FALSE}
+RidesChart
+```
+  
+  This chart shows the difference between the amount of rides between both groups - it appears that **Cyclistic members account for over 90% of all rides**, making this the largest group. Even though they ride much more often, we can also take a look at the difference in average trip time:
+```{r Trip time chart, echo = FALSE}
+TripChart
+```
+  
+  This chart shows that even though they represent only 9% of all rides, the **casual riders usual trip duration is close to an hour**, while the **members prefer shorter rides - about 12 minutes**. Lastly, let's take a look at the weekly distribution of these rides:
+```{r, echo = FALSE}
+RidesDayChart
+```
+  
+  This way we can see another difference between both groups - **casual riders make their trips more often on weekends**, while **members ride considerably more often during business days**.
+
+## Act phase
+  Final conclusions taken from this study are that:
+  
+  * Cyclistic members account for over 90% of all rides
+  * Casual riders' average trip takes almost an hour, while for members it is only a fifth of this number
+  * Members use the service mostly during business days, while casual riders mostly during weekends
+  
+  Suggested next steps are tailoring weekend offers to casual riders. Focus membership messaging on commuting and convenience to align with frequent weekday usage pattern. Another recommendations would be implementing a conversion possibility based on trip-lengths.
